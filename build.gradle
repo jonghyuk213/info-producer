@@ -1,0 +1,54 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '2.7.15'
+    id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+}
+
+group = 'bloomingbit.io'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    sourceCompatibility = '17'
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-amqp'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
+    implementation 'com.fasterxml.jackson.core:jackson-core:2.15.2'
+    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.15.2'
+
+    // elastic job
+    implementation ("org.apache.shardingsphere.elasticjob:elasticjob-lite-core:3.0.1") {
+        exclude group: 'ch.qos.logback', module: 'logback-classic'
+    }
+    implementation ("org.apache.shardingsphere.elasticjob:elasticjob-lite-lifecycle:3.0.1") {
+        exclude group: 'ch.qos.logback', module: 'logback-classic'
+    }
+
+    // zoo keeper
+    implementation "org.apache.curator:curator-test:5.1.0"
+    implementation "org.apache.curator:curator-framework:5.2.0"
+    implementation "org.apache.curator:curator-recipes:5.2.0"
+
+    compileOnly 'org.projectlombok:lombok'
+//    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.amqp:spring-rabbit-test'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}

@@ -1,0 +1,25 @@
+server:
+  port: 8080
+  shutdown: graceful
+
+logging:
+  level:
+    root: info
+
+spring:
+  profiles:
+    active: local
+  jackson:
+    serialization:
+      write-date-keys-as-timestamps: false
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+rabbitmq:
+    queue.name: sample.queue
+    exchange.name: sample.exchange
+    routing.key: sample.key
+
